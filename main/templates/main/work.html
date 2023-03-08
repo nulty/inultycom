@@ -1,0 +1,162 @@
+{% extends 'main/base.html' %} {% block body %} {% load static %} {% load icons %}
+
+<div
+  class="container mx-auto pt-12 font-content text-slate-200 md:px-4 md:pt-32"
+>
+  <section
+    class="flex flex-wrap justify-between align-middle md:gap-x-16 lg:flex-row"
+  >
+    <div class="card">
+      <div class="card-head">Experience</div>
+      <div class="card-body">
+        <ul>
+          <li>{% icon 'fa fa-check' %} {{years}} years industry career</li>
+          <li>{% icon 'fa fa-check' %} Full Stack</li>
+          <li>{% icon 'fa fa-check' %} Startups and Multinationals</li>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Status</div>
+      <div class="card-body">
+        <ul>
+          <li>{% icon 'fa fa-map-pin' %} London based</li>
+          <li>{% icon 'fa fa-train' %} Remote and Hybrid</li>
+          <li>{% icon 'fa fa-plus' %} Full Indemnity Insurance</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Past Projects</div>
+      <div class="card-body">
+        <div class="flex flex-wrap gap-y-1 justify-between ">
+          <div class="flex flex-col items-center justify-between">
+            <img
+              src="{% static 'images/rails.png' %}"
+              title="Rails"
+              alt="Rails"
+            />
+            Rails Apps
+          </div>
+          <div class="flex flex-col items-center justify-between">
+            <img
+              src="{% static 'images/chrome.svg' %}"
+              alt="Chrome"
+              title="Chrome"
+              width="128"
+            />
+            Browser extensions
+          </div>
+          <div class="flex flex-col items-center justify-between">
+            <img
+              src="{% static 'images/react.png' %}"
+              title="React"
+              alt="React"
+            />
+            React apps
+          </div>
+          <div class="flex flex-col items-center justify-between">
+            <img
+              src="{% static 'images/vuejs.svg' %}"
+              alt="VueJS"
+              title="VueJS"
+              width="128"
+            />
+            Vue apps
+          </div>
+          <div class="flex flex-col items-center justify-between">
+            <img
+              src="{% static 'images/crystal-white.svg' %}"
+              alt="Crystal"
+              title="Crystal"
+              width="128"
+            />
+            Crystal apps
+          </div>
+          <div class="flex flex-col items-center justify-between">
+            <img
+              src="{% static 'images/rubyl.svg' %}"
+              alt="Ruby"
+              title="Ruby"
+              width="128"
+            />
+            Ruby Gem
+          </div>
+          <div class="flex flex-col items-center justify-between">
+            <img
+              src="{% static 'images/python.svg' %}"
+              alt="Python"
+              title="Python"
+              width="128"
+            />
+            Django App
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card full">
+      <div class="card-head">Profile</div>
+      <div class="card-body">
+        <p>
+          I feel it's important to have a direct relationship with clients to
+          fully understand the goals of the projects I work on.
+        </p>
+        <p>
+          I especially enjoy working within a team of developers. I am a team
+          player and I get a lot out of sharing ideas and mentoring junior
+          developers.
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">Services</div>
+      <div class="card-body technologies">
+        <img src="{% static 'images/linux.png' %}" title="Linux" alt="Linux" />
+        <img src="{% static 'images/rubyo.png' %}" title="Ruby" alt="Ruby" />
+        <img
+          src="{% static 'images/js.png' %}"
+          title="Javascript"
+          alt="Javascript"
+        />
+        <img
+          src="{% static 'images/aws.png' %}"
+          title="Amazon Web Services"
+          alt="AWS"
+        />
+        <img
+          src="{% static 'images/ts-logo-128.svg' %}"
+          alt="TypeScript"
+          END
+          title="TypeScript"
+        />
+        <img
+          src="{% static 'images/nvim.svg' %}"
+          alt="NeoVim"
+          title="NeoVim"
+          width="128"
+        />
+        <img
+          src="{% static 'images/docker.svg' %}"
+          alt="Docker"
+          title="Docker"
+          width="128"
+        />
+        <img
+          src="{% static 'images/python.svg' %}"
+          alt="Python"
+          title="Python"
+          width="128"
+        />
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">Recent Projects</div>
+      <div class="card-body projects">
+        <div class="flex flex-wrap"></div>
+      </div>
+    </div>
+  </section>
+  {% endblock %}
+</div>
