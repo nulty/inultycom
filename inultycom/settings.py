@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-xnlbtvhb&@k+%@fnb)e-qm(3zkkg2fu4rh0j11$zm5@h+rfdve
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 DJANGO_ICONS = {"ICONS": {"check": 'check'}}
 
@@ -33,6 +33,7 @@ DJANGO_ICONS = {"ICONS": {"check": 'check'}}
 
 INSTALLED_APPS = [
     # "django.contrib.admin",
+    "livereload",
     "main.apps.MainConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
