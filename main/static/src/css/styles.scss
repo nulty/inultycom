@@ -1,0 +1,83 @@
+@use "./card";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  :root {
+    --color-primary: #3ca4c8;
+    --color-secondary: #eaebf0;
+    --color-tertiary: #212830;
+    /* ... */
+  }
+}
+
+nav {
+  z-index: 1;
+
+  background-color: var(--color-tertiary);
+
+  svg {
+    fill: var(--color-primary);
+
+    height: 30px;
+
+    opacity: 1;
+  }
+}
+
+ul {
+
+  li {
+    padding: 5px;
+  }
+}
+
+.blue-text {
+  color: var(--color-primary);
+}
+
+section {
+  margin-top: 4rem;
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.work {
+  background-color: var(--color-tertiary);
+
+  .card-body.technologies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card-body img {
+    width: 4rem;
+  }
+}
+
+.white {
+  color: #eaebf0;
+}
+
+.blue {
+  color: var(--color-primary);
+}
+
+.header-logo {
+  fill: #ccc;
+}
+
+.header {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6615021008403361) 9%,
+    rgba(0, 212, 255, 0.01) 73%
+  );
+}
