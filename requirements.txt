@@ -4,6 +4,7 @@ Django==4.1.7
 django-environ==0.10.0
 django-icons==22.1
 django-livereload-server==0.4
+gunicorn==20.1.0
 six==1.16.0
 soupsieve==2.4
 sqlparse==0.4.3
