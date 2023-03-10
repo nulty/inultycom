@@ -18,3 +18,13 @@ __pycache__/
 # Ignored by the build system
 /setup.cfg
 #!include:.gitignore
+
+.editorconfig
+.eslintrc.yml
+.prettierrc.js
+.stylelintrc.json
+.yarnrc.yml
+postcss.config.js
+rollup.config.js
+tailwind.config.js
+Procfile
