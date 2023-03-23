@@ -4,3 +4,4 @@ venv/
 .yarn/
 node_modules/
 **/ignore
+.env.prod
