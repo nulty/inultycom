@@ -22,6 +22,7 @@ entrypoint: gunicorn -b :$PORT -w 2 inultycom.wsgi:application
 
 env_variables:
   # This setting is used in settings.py to configure your ALLOWED_HOSTS
+  SETTINGS_NAME:  inultycom-secrets
   # APPENGINE_URL: PROJECT_ID.uc.r.appspot.com
 
 handlers:
