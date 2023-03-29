@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
+from django.views.decorators.cache import cache_page
 from main.lib.github.events import GitHubEvents
 import requests
 
@@ -7,6 +8,7 @@ import requests
 # logger = logging.getLogger(__name__)
 
 
+@cache_page(15)
 def home(request):
     page_name = "home"
     template = loader.get_template("main/home.html")
