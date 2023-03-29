@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+
+  .w-max-content {
+    width: max-content;
+  }
+}
+
 @layer base {
 
   :root {
@@ -80,4 +87,17 @@ section {
     rgba(0, 0, 0, 0.6615021008403361) 9%,
     rgba(0, 212, 255, 0.01) 73%
   );
+}
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

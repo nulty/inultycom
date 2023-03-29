@@ -1,6 +1,5 @@
-{% extends 'main/base.html' %} {% block body %} {% load static %}
-{% load icons %}
-<div class="top-0 left-0 bottom-0 right-0 h-screen">
+{% extends 'main/base.html' %} {% block body %} {% load static %} {% load icons %}
+<div class="top-0 left-0 bottom-0 right-0 h-full">
   <img
     class="h-screen w-screen object-cover"
     src="{% static 'src/images/hero.jpg' %}"
@@ -12,18 +11,37 @@
       Iain McNulty
     </p>
     <p class="blue-text font-hero text-3xl md:text-4xl xl:text-6xl">
-    {% icon 'fa fa-terminal text-white' %} Software Engineer
+      {% icon 'fa fa-terminal text-white' %} Software Engineer
     </p>
     <div
-      class="flex flex-col justify-center space-y-4 md:flex-row md:space-y-0 space-x-4"
+      class="flex flex-col justify-center space-y-4 space-x-4 md:flex-row md:space-y-0"
     >
       <a
-        class="bg-tertiary text-center border-primary border-2 mt-16 self-center w-3/4 rounded py-2 px-4 text-white hover:bg-primary md:text-2xl"
-      href="/work">
-        Learn more
-      </a>
+        class="mt-16 w-3/4 self-center rounded border-2 border-primary bg-tertiary py-2 px-4 text-center text-white hover:bg-primary md:text-2xl"
+        href="/work"
+        >Learn more</a
+      >
     </div>
   </div>
 
-  {% endblock %}
+  <div class="">
+    <div
+      class="shadow-primary-500 w-full overflow-hidden bg-secondary p-6 lg:col-span-3"
+    >
+      <div class="text-primary-700 pb-6 text-center text-4xl md:text-left">
+        Github {% icon 'fab fa-github'%}
+      </div>
+
+      <div class="scrollbar-hide overflow-scroll">
+        <div
+          class="w-max-content flex cursor-context-menu flex-row gap-16 p-10"
+        >
+          {% for event in github_events %}
+          {% with template="main/github/events/"|add:event.template|add:".html" %}
+          {% include template with event=event %} {% endwith %} {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+{% endblock %}

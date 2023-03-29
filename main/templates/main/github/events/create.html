@@ -1,0 +1,11 @@
+<div class="flex flex-col w-96 rounded-t bg-slate-200 p-4 shadow-lg shadow-stone-900 justify-between">
+  <a class="block text-lg text-slate-700 hover:underline hover:underline-offset-8 w-fit" href="{{event.repo.url}}"
+    >{{event.repo.name}}</a
+  >
+  <div class="flex flex-col justify-between">
+    Created {{event.payload.ref_type}} -- {{event.payload.ref}}
+  </div>
+  <div class="flex self-end text-xs text-slate-400">
+    {{event.created_at|timesince}} ago
+  </div>
+</div>
