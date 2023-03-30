@@ -28,4 +28,8 @@ postcss.config.js
 rollup.config.js
 tailwind.config.js
 Procfile
-.env.*
+.env*
+main/static/dist/*
+
+# This is ignored by git but needed by gcloud
+!static/
