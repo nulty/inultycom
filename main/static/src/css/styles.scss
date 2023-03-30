@@ -14,9 +14,9 @@
 @layer base {
 
   :root {
-    --color-primary: #3ca4c8;
-    --color-secondary: #eaebf0;
-    --color-tertiary: #212830;
+    --color-primary: #3ca4c8; // bluish
+    --color-secondary: #eaebf0; // whitish
+    --color-tertiary: #212830; // greyish
     /* ... */
   }
 }
@@ -35,15 +35,10 @@ nav {
   }
 }
 
-ul {
-
+.card.card__bullets {
   li {
     padding: 5px;
   }
-}
-
-.blue-text {
-  color: var(--color-primary);
 }
 
 section {
