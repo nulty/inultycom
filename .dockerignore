@@ -1,0 +1,10 @@
+.git
+node_modules/
+.editorconfig
+.eslint.yml
+.prettierrc.js
+.stylelintrc.json
+.yarnrc.yml
+Procfile
+**/__pycache__/
+venv

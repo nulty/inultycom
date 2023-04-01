@@ -1,0 +1,3 @@
+yarn install
+yarn build
+python manage.py collectstatic -c --no-input
