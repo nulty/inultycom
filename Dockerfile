@@ -1,6 +1,9 @@
 FROM python:3.10-alpine
 
-ENV DJANGO_SETTINGS_MODULE=inultycom.environments.dev
+# set environment variables
+ENV DJANGO_SETTINGS_MODULE=inultycom.environments.prod
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 RUN apk update && \
     apk add --no-cache --virtual build-deps gcc python3-dev musl-dev && \
@@ -24,4 +27,4 @@ RUN bin/build
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]

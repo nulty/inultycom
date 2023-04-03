@@ -1,0 +1,12 @@
+#!/bin/env bash
+
+set -e
+
+if [ -z $1 ]; then
+  echo provide a version number
+  exit 1
+fi
+
+docker build -t inultycom:$1 .
+docker tag inultycom:$1 registry.digitalocean.com/inultycom/inultycom:$1
+docker push registry.digitalocean.com/inultycom/inultycom:$1

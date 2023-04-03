@@ -6,4 +6,7 @@ node_modules/
 **/ignore
 .env.prod
 /static
-main/static/dist
+main/static/dist/*
+postgres-data/
+nginx_conf/
+static_files/
