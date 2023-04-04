@@ -2,8 +2,7 @@
 
 set -e
 
-# Copy nginxconfig and static assets to volumes
-cp /app/nginx/inultycom-nginx.conf /app/nginx_conf/inultycom-nginx.conf
+# Copy static assets to volumes
 cp -r /app/static/ /app/static_files
 
 python manage.py migrate --noinput
