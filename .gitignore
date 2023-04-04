@@ -4,7 +4,7 @@ venv/
 .yarn/
 node_modules/
 **/ignore
-.env.prod
+.env.*
 /static
 main/static/dist/*
 postgres-data/

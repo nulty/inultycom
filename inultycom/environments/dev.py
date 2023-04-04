@@ -7,7 +7,7 @@ DEBUG=True
 env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-env_file = os.path.join(BASE_DIR, ".env")
+env_file = os.path.join(BASE_DIR, ".env.dev")
 
 env.read_env(env_file)
 
