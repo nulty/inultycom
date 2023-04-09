@@ -4,20 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-
-  .w-max-content {
-    width: max-content;
-  }
-}
-
 @layer base {
 
   :root {
     --color-primary: #3ca4c8; // bluish
     --color-secondary: #eaebf0; // whitish
     --color-tertiary: #212830; // greyish
-    /* ... */
+    --nav-height: 64px;
+    --footer-height: 112px;
+    --main-height: calc(100vh - var(--footer-height) - var(--nav-height));
   }
 }
 

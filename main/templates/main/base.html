@@ -30,7 +30,7 @@
 
   <body class="{{page_name}}">
     {% include 'main/navbar.html' %}
-    <main>{% block body %} {% endblock %}</main>
+    <main class="min-h-[var(--main-height)]">{% block body %} {% endblock %}</main>
     {% include 'main/footer.html' %}
     {% if env == "prod" %}
     <!-- Google tag (gtag.js) -->
