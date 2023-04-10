@@ -1,5 +1,5 @@
 @use "./card";
-// @use "./pygments";
+/*// @use "./pygments"; */
 @use "./codehilite/vim.css";
 @use "./markdown";
 
@@ -19,6 +19,11 @@
   }
 }
 
+:root {
+    --nav-height: 64px;
+    --footer-height: 112px;
+    --main-height: calc(100vh - var(--footer-height) - var(--nav-height));
+}
 nav {
   z-index: 1;
 
