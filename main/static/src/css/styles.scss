@@ -1,7 +1,6 @@
 @use "./card";
-/*// @use "./pygments"; */
-@use "./codehilite/vim.css";
 @use "./markdown";
+@use "./codehilite/one-dark.css";
 
 @tailwind base;
 @tailwind components;
