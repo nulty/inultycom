@@ -19,6 +19,7 @@ module.exports = {
     fontFamily: {
       hero: ['Poppins'],
       content: ['Prompt'],
+      mono: ['monospace'],
     },
   },
   variants: {
