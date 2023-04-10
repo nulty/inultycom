@@ -35,6 +35,7 @@ export default {
   watch: {
     include: [
       'rollup.config.js',
+      'blog/templates/**',
       'postcss.config.js',
       'main/static/src/**/*.js',
       'main/static/**',

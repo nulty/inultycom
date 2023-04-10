@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %} {% block body %}
+<div
+  class="container mx-auto mt-[64px] min-h-full font-content text-slate-200 md:px-4"
+>
+  <div class="flex items-center justify-center text-4xl">the Blog</div>
+
+  <div class="flex flex-col text-xl text-stone-300">
+    <div
+      class="latest-articles mt-16 flex h-full w-full flex-col items-stretch justify-items-stretch gap-8 px-10 md:gap-16 lg:flex-row"
+    >
+      {% for a in latest_articles %}
+      <div
+        class="flex min-h-[150px] grow-0 basis-full flex-col justify-between rounded border border-solid border-white p-8 md:h-48"
+      >
+        <div class="">
+          <a
+            class="text-lg hover:underline hover:underline-offset-4 lg:text-2xl"
+            href="{{a.slug}}"
+            >{{a.title}}</a
+          >
+          <div class="hidden text-sm text-slate-400 md:block">
+            {{a.sub_title}}
+          </div>
+        </div>
+        <div class="text-xs text-slate-500">{{a.published_at|date}}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="flex flex-col gap-8 p-10">
+      {% for a in articles %}
+      <div>
+        <a class="hover:underline hover:underline-offset-4" href="{{a.slug}}"
+          >{{a.title}}</a
+        >
+        <span class="text-sm text-slate-400">{{a.sub_title}}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endblock %}
+</div>

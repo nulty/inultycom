@@ -1,4 +1,7 @@
 @use "./card";
+// @use "./pygments";
+@use "./codehilite/vim.css";
+@use "./markdown";
 
 @tailwind base;
 @tailwind components;
@@ -44,7 +47,7 @@ section {
   background-color: var(--color-primary);
 }
 
-.work {
+.work, .blog {
   background-color: var(--color-tertiary);
 
   .card-body.technologies {

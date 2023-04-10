@@ -1,8 +1,8 @@
 module.exports = {
-  purge: {
-    enabled: true,
-    content: ['./main/templates/**/*.html'],
-  },
+  content: [
+    './blog/templates/**/*.html',
+    './main/templates/**/*.html',
+  ],
   watch: ['./main/static/css/**/*.scss'],
   darkMode: 'media', // or 'class'
   theme: {

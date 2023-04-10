@@ -12,6 +12,7 @@ DJANGO_ICONS = {"ICONS": {"check": "check"}}
 
 INSTALLED_APPS = [
     "django.contrib.admin",
+    "markdownify.apps.MarkdownifyConfig",
     "main.apps.MainConfig",
     "blog.apps.BlogConfig",
     "livereload",
@@ -114,6 +115,13 @@ CACHES = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MARKDOWNIFY = {
+    "default": {
+        "BLEACH": False,
+        "MARKDOWN_EXTENSIONS": ["fenced_code", "codehilite", "attr_list", ],
+    },
+}
 
 LOGGING = {
     "version": 1,

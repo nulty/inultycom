@@ -15,6 +15,9 @@ SECRET_KEY = env("SECRET_KEY")
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",") or []
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS").split(",") or []
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
