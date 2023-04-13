@@ -119,7 +119,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MARKDOWNIFY = {
     "default": {
         "BLEACH": False,
-        "MARKDOWN_EXTENSIONS": ["fenced_code", "codehilite", "attr_list", ],
+        "MARKDOWN_EXTENSIONS": ["fenced_code", "codehilite", "attr_list", "tables", ],
     },
 }
 
