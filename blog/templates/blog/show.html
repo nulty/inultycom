@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %} {% block body %} {% load markdownify %}
 <div
-  class="blog show container mx-auto pt-12 xl:max-w-[80rem] font-content text-slate-200 px-12 md:px-4 md:pt-32"
+  class="blog show container mx-auto pt-12 xl:max-w-[50rem] font-content text-slate-200 px-12 md:px-4 md:pt-32"
 >
   <div class="flex flex-col items-center">
     <h1 class="text-4xl font-bold text-justify">{{ article.title }}</h1>
@@ -8,7 +8,7 @@
   </div>
   <div class="mt-6 text-xs md:text-sm text-center">{{ article.created_at|date:"l, d M Y"}}</div>
   <hr class="w-1/2 text-center mx-auto mt-8">
-  <div class="mt-6 markdown light">{{article.body|markdownify }}</div>
+  <div class="mt-6 text-sm md:text-base markdown light">{{article.body|markdownify }}</div>
 </div>
 
 {% endblock %}
