@@ -17,7 +17,7 @@ def home(request):
     # github_activity = json.loads(open("main/github.json", "r").read())
     github_events = GitHubEvents(github_activity()).events
 
-    context = {"page_name": page_name, "github_events": github_events}
+    context = {"page_name": page_name, "years": 9, "github_events": github_events}
     return HttpResponse(template.render(context, request))
 
 
@@ -30,9 +30,3 @@ def github_activity():
     else:
         return []
 
-
-def work(request):
-    page_name = "work"
-    template = loader.get_template("main/work.html")
-    context = {"page_name": page_name, "years": 9}
-    return HttpResponse(template.render(context, request))

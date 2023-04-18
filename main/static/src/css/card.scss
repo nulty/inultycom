@@ -1,5 +1,5 @@
 .card {
-  @apply mb-16 flex w-full flex-grow flex-col gap-8 p-3 drop-shadow-md md:basis-[21rem] md:border md:border-slate-500 lg:basis-96;
+  @apply mb-16 flex w-full flex-grow flex-col p-3 drop-shadow-md md:basis-[21rem] lg:basis-96;
 }
 
 .card.full {
@@ -7,14 +7,25 @@
 }
 
 .card-head {
-  @apply -z-0 -translate-y-10 border border-slate-500 bg-gray-800 p-3 text-center text-2xl text-slate-200 md:text-xl;
+  @apply -z-0 border border-l-0 border-r-0 border-t-0 border-slate-500 bg-tertiary p-3 text-center text-2xl text-slate-200 md:text-xl;
 }
 
 .card-body {
-  @apply -mt-14 h-full  px-8 pb-4 text-lg md:text-sm lg:text-base;
+  @apply border border-l-0 border-r-0 border-t-0 border-slate-500 p-8 pb-4 text-lg md:text-sm lg:text-base;
+
+  img {
+    margin: auto;
+  }
 
   li::first-letter {
     font-size: 20px;
     font-family: "monospace";
+  }
+}
+
+.card.card__bullets {
+
+  li {
+    padding: 5px;
   }
 }

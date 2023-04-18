@@ -14,14 +14,16 @@
     --color-tertiary: #212830; // greyish
     --nav-height: 64px;
     --footer-height: 112px;
-    --main-height: calc(100vh - var(--footer-height) - var(--nav-height));
+    --main-height: calc(100svh - var(--footer-height) - var(--nav-height));
+    --splash-height: calc(100svh - var(--nav-height));
   }
 }
 
 :root {
     --nav-height: 64px;
     --footer-height: 112px;
-    --main-height: calc(100vh - var(--footer-height) - var(--nav-height));
+    --main-height: calc(100svh - var(--footer-height) - var(--nav-height));
+    --splash-height: calc(100svh - var(--nav-height));
 }
 nav {
   z-index: 1;
@@ -37,14 +39,9 @@ nav {
   }
 }
 
-.card.card__bullets {
-  li {
-    padding: 5px;
-  }
-}
+.button--border {
+  @apply rounded border-2 border-primary bg-tertiary px-4 py-2 text-lg text-center text-white hover:bg-primary md:text-4xl;
 
-section {
-  margin-top: 4rem;
 }
 
 .bg-primary {
@@ -54,7 +51,7 @@ section {
 .work, .blog {
   background-color: var(--color-tertiary);
 
-  .card-body.technologies {
+  .card-body {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -62,6 +59,16 @@ section {
 
   .card-body img {
     width: 4rem;
+  }
+}
+
+.home section {
+  min-height: 100svh;
+  &#splash {
+
+    min-height: var(--splash_height);
+
+
   }
 }
 

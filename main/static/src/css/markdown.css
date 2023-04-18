@@ -57,7 +57,7 @@
 }
 
 .markdown code {
-  @apply font-mono text-sm inline text-gray-800 bg-gray-200 rounded px-2 py-1;
+  @apply font-mono text-sm whitespace-nowrap inline text-gray-800 bg-gray-200 rounded px-2 py-1;
 }
 
 .markdown pre {
