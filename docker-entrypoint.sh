@@ -3,6 +3,7 @@
 set -e
 
 # Copy static assets to volumes
+rm -rf /app/static_files/*
 cp -r /app/static/ /app/static_files
 
 python manage.py migrate --noinput
