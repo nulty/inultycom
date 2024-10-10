@@ -2,8 +2,8 @@ FROM python:3.10-alpine
 
 # set environment variables
 ENV DJANGO_SETTINGS_MODULE=inultycom.environments.prod
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 RUN apk update && \
     apk add --no-cache --virtual build-deps gcc python3-dev musl-dev && \
@@ -23,7 +23,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN bin/build
+# RUN bin/build
+
+RUN yarn install
+RUN yarn build
+RUN python manage.py collectstatic -c --no-input
 
 EXPOSE 8000
 
