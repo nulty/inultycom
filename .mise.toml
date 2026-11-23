@@ -7,3 +7,8 @@ doctl = "latest"
 
 [settings]
 disable_tools = ['yarn']
+
+[env]
+# mise creates ./venv from the python above and activates it in this directory,
+# so `python` is the same interpreter in the shell, make, foreman and bin/ scripts.
+_.python.venv = { path = "venv", create = true }

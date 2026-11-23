@@ -1,11 +1,15 @@
 # Local tasks. Server-side tasks are Kamal aliases (config/deploy.yml):
 #   kamal logs | shell | manage <cmd> | dbc | dblogs
 
+# Use mise's environment (pinned tools + ./venv first on PATH) for every recipe and
+# everything it starts (foreman, bin/ scripts), even outside an activated shell.
+export PATH := $(shell mise exec -- printenv PATH)
+
 SITE      := https://inulty.com
 SERVER    := root@178.128.165.170
 SSH_KEY   := ~/.ssh/inulty_digitalocean_ed25519
 SSH       := ssh -i $(SSH_KEY) -o IdentitiesOnly=yes $(SERVER)
-PY        := venv/bin/python
+PY        := python
 YARN      := COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack yarn
 DEV       := DJANGO_SETTINGS_MODULE=inultycom.environments.dev
 # Enough env for prod settings to load without a real database
@@ -18,8 +22,8 @@ CHECK_ENV := DJANGO_SETTINGS_MODULE=inultycom.environments.prod SECRET_KEY=check
 help: ## List tasks
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  \033[36m%-11s\033[0m %s\n", $$1, $$2}'
 
-setup: ## Create venv, install Python and JS deps, build assets, migrate local DB
-	test -d venv || python -m venv venv
+setup: ## Install tools (mise creates ./venv), Python and JS deps, build assets, migrate local DB
+	mise install
 	$(PY) -m pip install --upgrade pip
 	$(PY) -m pip install -r requirements.txt
 	$(YARN) install
