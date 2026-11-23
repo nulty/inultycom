@@ -7,8 +7,8 @@ export PATH := $(shell mise exec -- printenv PATH)
 
 SITE      := https://inulty.com
 SERVER    := root@178.128.165.170
-SSH_KEY   := ~/.ssh/inulty_digitalocean_ed25519
-SSH       := ssh -i $(SSH_KEY) -o IdentitiesOnly=yes $(SERVER)
+# Key comes from ~/.ssh/config (see config/deploy.yml)
+SSH       := ssh $(SERVER)
 PY        := python
 YARN      := COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack yarn
 DEV       := DJANGO_SETTINGS_MODULE=inultycom.environments.dev

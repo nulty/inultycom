@@ -8,13 +8,11 @@ servers:
   web:
     - 178.128.165.170
 
+# Key comes from ~/.ssh/config: give this IP a Host entry with IdentityFile and
+# IdentitiesOnly yes (otherwise the agent offers every key and the server rejects
+# the connection with "Too many authentication failures").
 ssh:
   user: root
-  # Same key as the inultycom-root host in ~/.ssh/config. keys_only stops the
-  # agent offering every key and hitting "Too many authentication failures".
-  keys_only: true
-  keys:
-    - ~/.ssh/inulty_digitalocean_ed25519
 
 # kamal-proxy terminates TLS (Let's Encrypt) and routes these hosts to the app.
 proxy:
