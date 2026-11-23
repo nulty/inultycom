@@ -1,0 +1,26 @@
+[project]
+name = "inultycom"
+version = "0.1.0"
+description = "inulty.com personal website"
+requires-python = "==3.13.*"
+dependencies = [
+    "django>=5.2,<5.3",               # LTS, security support to April 2028
+    "django-environ>=0.14",
+    "django-icons>=26.3",
+    "django-livereload-server>=0.5.1",  # base template loads its tag, so needed in prod too
+    "django-markdownify>=0.9.7",
+    "gunicorn>=27.0",
+    "markdown>=3.11",
+    "psycopg2>=2.9.13",
+    "pygments>=2.21",                 # codehilite for blog code blocks
+    "requests>=2.34",
+    "whitenoise>=6.12",
+]
+
+[tool.uv]
+# An app, not a library: don't build/install the project itself.
+package = false
+# Python comes from mise (.mise.toml) locally and the base image in Docker;
+# uv must never download its own.
+python-preference = "only-system"
+python-downloads = "never"

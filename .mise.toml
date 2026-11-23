@@ -1,5 +1,6 @@
 [tools]
 python = "3.13"
+uv = "0.13.9"
 node = "24"
 ruby = "3.4.5"
 "gem:kamal" = "2.10.1"
@@ -7,8 +8,6 @@ doctl = "latest"
 
 [settings]
 disable_tools = ['yarn']
-
-[env]
-# mise creates ./venv from the python above and activates it in this directory,
-# so `python` is the same interpreter in the shell, make, foreman and bin/ scripts.
-_.python.venv = { path = "venv", create = true }
+# mise creates ./.venv with uv from the python above (when uv.lock exists) and
+# activates it, so `python` is the same interpreter in the shell, make, foreman and bin/.
+python.uv_venv_auto = "create|source"

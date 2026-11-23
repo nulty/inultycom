@@ -10,6 +10,8 @@
 .stylelintrc.json
 **/__pycache__/
 venv/
+.venv/
+db.sqlite3
 node_modules/
 .yarn/cache/
 .yarn/install-state.gz
@@ -34,7 +36,6 @@ main/static/dist/
 # Scratch notes and drafts
 *.md
 *.txt
-!requirements.txt
 github.json
 backups/
 Makefile

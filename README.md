@@ -4,20 +4,20 @@
 ## Development
 
 ### Python environment
-First time (or to rebuild it):
+Python comes from mise (`.mise.toml`) and dependencies are managed with
+[uv](https://docs.astral.sh/uv/): `pyproject.toml` lists them, `uv.lock` pins them.
+mise creates `./.venv` with uv and activates it in this directory, so `python` is
+always the mise-managed 3.13 venv. The Makefile loads mise's `PATH` itself, so
+`make` targets get the same `python` even outside an activated shell.
+
 ```
-rm -rf venv
-python -m venv venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
+make setup             # mise install + uv sync (+ JS deps, assets, local DB)
+uv add <package>       # add a dependency (updates pyproject.toml and uv.lock)
+make outdated          # direct deps with newer versions
+make upgrade           # upgrade within the ranges in pyproject.toml
 ```
 
-After that:
-```
-source venv/bin/activate
-which python # should be venv version
-```
+To rebuild the venv: `rm -rf .venv && make setup`.
 
 Settings are picked with `DJANGO_SETTINGS_MODULE=inultycom.environments.{dev,prod}`.
 

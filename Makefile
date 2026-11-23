@@ -1,7 +1,7 @@
 # Local tasks. Server-side tasks are Kamal aliases (config/deploy.yml):
 #   kamal logs | shell | manage <cmd> | dbc | dblogs
 
-# Use mise's environment (pinned tools + ./venv first on PATH) for every recipe and
+# Use mise's environment (pinned tools + ./.venv first on PATH) for every recipe and
 # everything it starts (foreman, bin/ scripts), even outside an activated shell.
 export PATH := $(shell mise exec -- printenv PATH)
 
@@ -17,15 +17,14 @@ CHECK_ENV := DJANGO_SETTINGS_MODULE=inultycom.environments.prod SECRET_KEY=check
              DATABASE_URL=sqlite://:memory: ALLOWED_HOSTS=inulty.com
 
 .DEFAULT_GOAL := help
-.PHONY: help setup dev superuser assets check test image smoke smoke-live deploy backup outdated
+.PHONY: help setup dev superuser assets check test image smoke smoke-live deploy backup outdated upgrade
 
 help: ## List tasks
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  \033[36m%-11s\033[0m %s\n", $$1, $$2}'
 
-setup: ## Install tools (mise creates ./venv), Python and JS deps, build assets, migrate local DB
+setup: ## Install tools, Python deps (uv, from uv.lock) and JS deps, build assets, migrate local DB
 	mise install
-	$(PY) -m pip install --upgrade pip
-	$(PY) -m pip install -r requirements.txt
+	uv sync --locked
 	$(YARN) install
 	$(YARN) build
 	$(DEV) $(PY) manage.py migrate
@@ -66,5 +65,9 @@ backup: ## pg_dump production DB to backups/
 		> backups/inultycom-$$(date +%Y%m%d-%H%M%S).dump
 	@ls -lh backups | tail -1
 
-outdated: ## List outdated Python packages
-	$(PY) -m pip list --outdated
+outdated: ## List direct Python deps with newer versions
+	uv tree --outdated --depth 1
+
+upgrade: ## Upgrade Python deps within pyproject.toml ranges (updates uv.lock)
+	uv lock --upgrade
+	uv sync --locked
