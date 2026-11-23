@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
 
 # Create your models here.
@@ -12,5 +12,5 @@ class BlogArticle(models.Model):
     featured = models.BooleanField(null=True)
     likes = models.IntegerField("likes", default=0)
     published_at = models.DateTimeField("date published", null=True, blank=True)
-    created_at = models.DateTimeField("created at", default=datetime.now)
-    updated_at = models.DateTimeField("updated at", default=datetime.now)
+    created_at = models.DateTimeField("created at", default=timezone.now)
+    updated_at = models.DateTimeField("updated at", default=timezone.now)

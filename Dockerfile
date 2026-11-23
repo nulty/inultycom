@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # --- Build JS/CSS bundle ---------------------------------------------------
-FROM node:20-alpine AS assets
+FROM node:24-alpine AS assets
 
 WORKDIR /app
 RUN corepack enable
@@ -16,7 +16,7 @@ RUN yarn build
 
 
 # --- App image -------------------------------------------------------------
-FROM python:3.10-alpine
+FROM python:3.13-alpine
 
 ENV DJANGO_SETTINGS_MODULE=inultycom.environments.prod \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -37,7 +37,7 @@ COPY --from=assets /app/main/static/dist ./main/static/dist
 RUN SECRET_KEY=build-only DATABASE_URL=sqlite://:memory: \
     python manage.py collectstatic --clear --no-input
 
-RUN adduser -D -H app && chown -R app /app
+RUN adduser -D app && chown -R app /app
 USER app
 
 EXPOSE 8000

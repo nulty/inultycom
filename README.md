@@ -3,10 +3,23 @@
 
 ## Development
 
+### Python environment
+First time (or to rebuild it):
+```
+rm -rf venv
+python -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+After that:
 ```
 source venv/bin/activate
 which python # should be venv version
 ```
+
+Settings are picked with `DJANGO_SETTINGS_MODULE=inultycom.environments.{dev,prod}`.
 
 ### Run dev server
 ```

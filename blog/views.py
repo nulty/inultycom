@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from .models import BlogArticle
-from datetime import datetime
+from django.utils import timezone
 
 
 # Create your views here.
 def index(request):
     page_name = "blog"
-    qset = BlogArticle.objects.filter(published_at__isnull=False, published_at__lte=datetime.now()).order_by("-published_at")[:9]
+    qset = BlogArticle.objects.filter(published_at__isnull=False, published_at__lte=timezone.now()).order_by("-published_at")[:9]
     latest_articles = qset[:1]
     articles = qset[1:]
 
