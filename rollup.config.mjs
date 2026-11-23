@@ -3,12 +3,15 @@ import postcss from 'rollup-plugin-postcss'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
+import hash from 'rollup-plugin-hash'
 
 export default {
   input: './main/static/src/main.js',
+  strictDeprecations: true,
   output: {
     name: 'bundle',
-    file: './main/static/dist/bundle.js',
+    file: "./main/static/dist/bundle.js",
+    assetFileNames: "[name].[hash].js",
     format: 'iife',
   },
   plugins: [
@@ -20,6 +23,7 @@ export default {
         'process.env.npm_package_version': JSON.stringify('development'),
       },
     }),
+    hash(),
     postcss({
       extract: true,
       minify: true,

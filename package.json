@@ -1,6 +1,6 @@
 {
   "name": "inultycom",
-  "packageManager": "yarn@3.3.0",
+  "packageManager": "yarn@3.8.7+sha256.81bf69deb72c6cfebaca4389444e034c914cc1a90ea40e4ac55a5e2a1d7063d2",
   "scripts": {
     "build": "rollup --config",
     "start": "rollup --config -w"
@@ -9,7 +9,7 @@
     "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-env": "^7.14.4",
-    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-replace": "^5.0.2",
@@ -23,17 +23,18 @@
     "prettier": "^2.8.4",
     "prettier-eslint": "^15.0.1",
     "prettier-plugin-tailwindcss": "^0.2.3",
-    "rollup": "2.79.1",
-    "rollup-plugin-import-css": "^2.0.1",
+    "rollup": "^4.24.3",
+    "rollup-plugin-hash": "^1.3.0",
+    "rollup-plugin-import-css": "^3.5.6",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-postcss": "^4.0.0",
     "sass": "^1.58.3",
     "stylelint": "^15.2.0",
-    "stylelint-config-prettier-scss": "^0.0.1",
+    "stylelint-config-prettier-scss": "^1.0.0",
     "stylelint-config-standard": "^30.0.1",
     "stylelint-order": "^6.0.2",
     "stylelint-prettier": "^3.0.0",
     "stylelint-scss": "^4.4.0",
-    "tailwindcss": "^3.3.1"
+    "tailwindcss": "^3.4.14"
   }
 }

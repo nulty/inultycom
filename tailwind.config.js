@@ -13,7 +13,7 @@ module.exports = {
         tertiary: '#212830',
       },
       backgroundImage: (theme) => ({
-        'hero-pattern': 'url(/static/src/images/hero.jpg)',
+        'hero-pattern': 'url(/assets/images/hero.jpg)',
       }),
     },
     fontFamily: {
