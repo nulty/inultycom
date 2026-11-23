@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+# Smoke test the site.
+#
+#   bin/smoke                     build the image, run it against a throwaway Postgres
+#                                 on a private network (like Kamal does), check it, tear down
+#   bin/smoke https://inulty.com  run the HTTP checks against a live site
+set -uo pipefail
+cd "$(dirname "$0")/.."
+
+HOST=inulty.com
+failures=0
+pass() { printf '  \033[32m✓\033[0m %s\n' "$1"; }
+fail() { printf '  \033[31m✗\033[0m %s\n' "$1"; failures=$((failures + 1)); }
+
+# --- Local mode setup --------------------------------------------------------
+if [ $# -eq 0 ]; then
+  MODE=local
+  IMAGE=inultycom-smoke
+  NET=inulty-smoke
+  DB=inulty-smoke-db
+  APP=inulty-smoke-app
+  PW=smoke-test-password
+
+  cleanup() {
+    docker rm -f "$APP" "$DB" >/dev/null 2>&1
+    docker network rm "$NET" >/dev/null 2>&1
+  }
+  trap cleanup EXIT
+  cleanup
+
+  echo "Building image..."
+  docker build --platform linux/amd64 -q -t "$IMAGE" . >/dev/null || { echo "build failed"; exit 1; }
+
+  echo "Starting Postgres and app..."
+  docker network create "$NET" >/dev/null
+  docker run -d --name "$DB" --network "$NET" \
+    -e POSTGRES_USER=appuser -e POSTGRES_DB=inultycom_prod -e POSTGRES_PASSWORD="$PW" \
+    postgres:17-alpine >/dev/null
+  for _ in $(seq 30); do
+    docker exec "$DB" pg_isready -U appuser -d inultycom_prod >/dev/null 2>&1 && break
+    sleep 1
+  done
+
+  docker run -d --name "$APP" --network "$NET" -p 127.0.0.1::8000 \
+    -e SECRET_KEY=smoke-test-secret \
+    -e DATABASE_URL="postgres://appuser:$PW@$DB:5432/inultycom_prod" \
+    -e ALLOWED_HOSTS="$HOST,www.$HOST" \
+    -e CSRF_TRUSTED_ORIGINS="https://$HOST,https://www.$HOST" \
+    "$IMAGE" >/dev/null
+  BASE="http://$(docker port "$APP" 8000 | head -1)"
+  # Pretend to be kamal-proxy: right Host, TLS already terminated.
+  CURL=(curl -s -m 15 -H "Host: $HOST" -H "X-Forwarded-Proto: https")
+
+  for _ in $(seq 30); do
+    curl -s -m 2 "$BASE/up" >/dev/null 2>&1 && break
+    if [ "$(docker inspect -f '{{.State.Running}}' "$APP")" != true ]; then
+      echo "App container exited:"; docker logs "$APP" 2>&1 | tail -20; exit 1
+    fi
+    sleep 1
+  done
+else
+  MODE=remote
+  BASE="${1%/}"
+  CURL=(curl -s -m 15)
+fi
+
+status() { "${CURL[@]}" -o /dev/null -w '%{http_code}' "$@"; }
+
+expect() {  # expect <code> <path> [extra curl args...]
+  local want=$1 path=$2; shift 2
+  local got; got=$(status "$@" "$BASE$path")
+  [ "$got" = "$want" ] && pass "$path → $got" || fail "$path → $got (expected $want)"
+}
+
+echo "Checking $BASE ($MODE)"
+
+# Health check. kamal-proxy calls it with the container address as Host,
+# so locally hit it without our Host header.
+if [ "$MODE" = local ]; then
+  got=$(curl -s -m 5 -o /dev/null -w '%{http_code}' "$BASE/up")
+  [ "$got" = 200 ] && pass "/up (container Host) → 200" || fail "/up (container Host) → $got"
+else
+  expect 200 /up
+fi
+
+# Pages
+expect 200 /
+expect 200 /blog/
+expect 200 /admin/login/
+
+# Static assets (WhiteNoise)
+for path in /assets/dist/bundle.css /assets/dist/bundle.js /assets/images/hero.jpg \
+            /assets/images/me.jpeg /assets/images/rubyl.svg /assets/admin/css/base.css; do
+  expect 200 "$path"
+done
+
+# Every image the homepage references actually loads
+home=$("${CURL[@]}" "$BASE/")
+broken=0
+for src in $(grep -o -E 'src="/assets/[^"]+"' <<<"$home" | cut -d'"' -f2 | sort -u); do
+  [ "$(status "$BASE$src")" = 200 ] || { fail "homepage asset $src"; broken=1; }
+done
+[ $broken = 0 ] && pass "all homepage assets load"
+
+# GitHub activity feed rendered
+grep -q 'github.com/nulty/' <<<"$home" && pass "GitHub activity rendered" || fail "GitHub activity missing"
+
+# CSRF works over HTTPS: a bad login should re-render the form (200), not 403.
+# Cookie passed by hand because it's Secure and curl won't send it over plain http.
+login_headers=$("${CURL[@]}" -D - -o /dev/null "$BASE/admin/login/")
+csrf=$(grep -i '^set-cookie: csrftoken=' <<<"$login_headers" | sed -E 's/.*csrftoken=([^;]+).*/\1/I' | tr -d '\r')
+if [ -z "$csrf" ]; then
+  fail "no csrftoken cookie on /admin/login/"
+else
+  grep -i '^set-cookie: csrftoken=' <<<"$login_headers" | grep -qi secure \
+    && pass "CSRF cookie is Secure" || fail "CSRF cookie not Secure"
+  got=$(status -H "Cookie: csrftoken=$csrf" -H "Origin: https://$HOST" -H "Referer: https://$HOST/admin/login/" \
+    --data "csrfmiddlewaretoken=$csrf&username=smoke&password=smoke" "$BASE/admin/login/")
+  [ "$got" = 200 ] && pass "admin login POST passes CSRF → 200" || fail "admin login POST → $got (expected 200)"
+fi
+
+# Local only: blog article with markdown + code highlighting, against the real DB
+if [ "$MODE" = local ]; then
+  docker exec "$APP" python manage.py shell -c "
+from blog.models import BlogArticle
+from django.utils import timezone
+BlogArticle.objects.create(title='Smoke', sub_title='test', slug='smoke', published_at=timezone.now(),
+                           body='# Heading\n\n\`\`\`python\nprint(1)\n\`\`\`')" >/dev/null 2>&1
+  article=$("${CURL[@]}" "$BASE/blog/smoke")
+  grep -q 'class="codehilite"' <<<"$article" && grep -q '<h1>Heading' <<<"$article" \
+    && pass "blog article renders markdown + code highlighting" || fail "blog article render"
+  grep -q 'Smoke' <<<"$("${CURL[@]}" "$BASE/blog/")" && pass "article listed on /blog/" || fail "article missing from /blog/"
+
+  warnings=$(docker logs "$APP" 2>&1 | grep -E 'Traceback|RuntimeWarning|ERROR' | head -5)
+  [ -z "$warnings" ] && pass "no errors/warnings in app logs" || { fail "app logs:"; echo "$warnings"; }
+
+  # Last, since Django logs the rejected Host as an error.
+  got=$(curl -s -m 5 -o /dev/null -w '%{http_code}' -H 'Host: evil.example' "$BASE/")
+  [ "$got" = 400 ] && pass "unknown Host → 400" || fail "unknown Host → $got (expected 400)"
+fi
+
+echo
+if [ $failures -eq 0 ]; then echo "All checks passed."; else echo "$failures check(s) failed."; exit 1; fi

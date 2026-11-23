@@ -14,3 +14,4 @@ blog_articles/
 .kamal/secrets*
 production-backup/
 docker-config.json
+backups/

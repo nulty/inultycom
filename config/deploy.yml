@@ -49,10 +49,14 @@ env:
 # Keep fingerprinted assets from the previous version available during a deploy.
 asset_path: /app/static
 
+# Server-side tasks: `kamal <alias> [args]`. Local tasks live in the Makefile.
 aliases:
   shell: app exec --interactive --reuse "bash"
   logs: app logs -f
+  # kamal manage createsuperuser / kamal manage showmigrations ...
+  manage: app exec --interactive --reuse "python manage.py"
   dbc: accessory exec db --interactive --reuse "psql -U appuser inultycom_prod"
+  dblogs: accessory logs db -f
 
 accessories:
   db:

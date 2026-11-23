@@ -36,3 +36,5 @@ main/static/dist/
 *.txt
 !requirements.txt
 github.json
+backups/
+Makefile

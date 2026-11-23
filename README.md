@@ -75,11 +75,17 @@ Kamal is pinned in `.mise.toml`, so `mise install` provides it.
 - **Secrets**: `.kamal/secrets` (gitignored; never commit it). Needs `SECRET_KEY`,
   `POSTGRES_PASSWORD` and `DATABASE_URL`; the registry token comes from `$KAMAL_REGISTRY_PASSWORD`.
 
+Local tasks are in the `Makefile` (`make` lists them); server tasks are Kamal aliases.
+
 ```
 export KAMAL_REGISTRY_PASSWORD=<DigitalOcean API token>
-bin/deploy            # kamal deploy
+make smoke            # build the image, test it against a throwaway Postgres
+make deploy           # check + smoke, kamal deploy, then smoke test the live site
+make smoke-live       # smoke test https://inulty.com
+make backup           # pg_dump production to backups/
+
 kamal logs            # tail app logs
 kamal shell           # shell in the app container
+kamal manage <cmd>    # e.g. kamal manage createsuperuser
 kamal dbc             # psql in the db container
-kamal app exec "python manage.py createsuperuser" --interactive
 ```
