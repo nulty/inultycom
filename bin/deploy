@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Build, push and deploy to inulty.com with Kamal.
+# Needs KAMAL_REGISTRY_PASSWORD (a DigitalOcean API token) in the environment.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+if [ -z "${KAMAL_REGISTRY_PASSWORD:-}" ]; then
+  echo "KAMAL_REGISTRY_PASSWORD is not set (DigitalOcean API token with registry access)" >&2
+  exit 1
+fi
+
+exec kamal deploy "$@"

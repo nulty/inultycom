@@ -1,13 +1,38 @@
+# VCS / tooling
 .git
-node_modules/
+.gitignore
+.kamal/
+.mise.toml
+.ruby-lsp/
 .editorconfig
-.eslint.yml
+.eslintrc.yml
 .prettierrc.js
 .stylelintrc.json
-.yarnrc.yml
-Procfile
 **/__pycache__/
-venv
+venv/
+node_modules/
+.yarn/cache/
+.yarn/install-state.gz
+
+# Secrets and env files: config comes from Kamal at runtime, never the image
+.env
+.env.*
+docker-config.json
+
+# Deploy / local-only files
+config/deploy.yml
+docker-compose.yml
+Procfile
+db/
+production-backup/
+postgres-data/
+static/
 static_files/
 nginx_conf/
-postgres-data/
+main/static/dist/
+
+# Scratch notes and drafts
+*.md
+*.txt
+!requirements.txt
+github.json

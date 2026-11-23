@@ -1,0 +1,71 @@
+# Kamal deploy config for inulty.com
+# Secrets referenced here come from .kamal/secrets (gitignored).
+
+service: inulty
+image: inultycom/inultycom
+
+servers:
+  web:
+    - 178.128.165.170
+
+ssh:
+  user: root
+  # Same key as the inultycom-root host in ~/.ssh/config. keys_only stops the
+  # agent offering every key and hitting "Too many authentication failures".
+  keys_only: true
+  keys:
+    - ~/.ssh/inulty_digitalocean_ed25519
+
+# kamal-proxy terminates TLS (Let's Encrypt) and routes these hosts to the app.
+proxy:
+  ssl: true
+  hosts:
+    - inulty.com
+    - www.inulty.com
+  app_port: 8000
+  healthcheck:
+    path: /up
+
+registry:
+  server: registry.digitalocean.com
+  username: inulty
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+  # Build from the working tree rather than a clean git checkout.
+  context: .
+
+env:
+  clear:
+    DJANGO_SETTINGS_MODULE: inultycom.environments.prod
+    ALLOWED_HOSTS: inulty.com,www.inulty.com
+    CSRF_TRUSTED_ORIGINS: https://inulty.com,https://www.inulty.com
+  secret:
+    - SECRET_KEY
+    - DATABASE_URL
+
+# Keep fingerprinted assets from the previous version available during a deploy.
+asset_path: /app/static
+
+aliases:
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: accessory exec db --interactive --reuse "psql -U appuser inultycom_prod"
+
+accessories:
+  db:
+    image: postgres:17-alpine
+    host: 178.128.165.170
+    # No `port:` on purpose: the app reaches Postgres as `inulty-db` over the
+    # private `kamal` Docker network, so it is never published on the host.
+    env:
+      clear:
+        POSTGRES_USER: appuser
+        POSTGRES_DB: inultycom_prod
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      # Block storage volume, so data survives container/droplet rebuilds.
+      - /mnt/inultycom_vol1/postgres/data:/var/lib/postgresql/data

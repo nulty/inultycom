@@ -10,3 +10,7 @@ main/static/dist/*
 postgres-data/
 nginx_conf/
 static_files/
+blog_articles/
+.kamal/secrets*
+production-backup/
+docker-config.json

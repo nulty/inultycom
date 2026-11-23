@@ -1,0 +1,7 @@
+[tools]
+ruby = "3.4.5"
+"gem:kamal" = "2.10.1"
+doctl = "latest"
+
+[settings]
+disable_tools = ['yarn']
