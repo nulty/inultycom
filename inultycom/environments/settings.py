@@ -22,6 +22,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_icons",
+    "axes",
+]
+
+AUTHENTICATION_BACKENDS = [
+    # Must be first: refuses authentication while a lockout is active.
+    "axes.backends.AxesStandaloneBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 MIDDLEWARE = [
@@ -34,7 +41,19 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Must be last: renders the lockout response.
+    "axes.middleware.AxesMiddleware",
 ]
+
+# Admin login brute-force protection (django-axes). Lock out an IP after 5 failed
+# logins for any username, and a username after 5 failures from any IP, for an
+# hour. A successful login clears the count. If you lock yourself out:
+#   kamal manage axes_reset_username <username>   (or axes_reset to clear all)
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = 1  # hours
+AXES_LOCKOUT_PARAMETERS = ["ip_address", "username"]
+AXES_RESET_ON_SUCCESS = True
+AXES_CLIENT_IP_CALLABLE = "inultycom.client_ip.get_client_ip"
 
 ROOT_URLCONF = "inultycom.urls"
 

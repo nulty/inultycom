@@ -5,6 +5,7 @@ description = "inulty.com personal website"
 requires-python = "==3.13.*"
 dependencies = [
     "django>=5.2,<5.3",               # LTS, security support to April 2028
+    "django-axes>=9.1",               # admin login brute-force lockout
     "django-environ>=0.14",
     "django-icons>=26.3",
     "django-livereload-server>=0.5.1",  # base template loads its tag, so needed in prod too

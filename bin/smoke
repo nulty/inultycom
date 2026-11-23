@@ -105,7 +105,8 @@ done
 # GitHub activity feed rendered
 grep -q 'github.com/nulty/' <<<"$home" && pass "GitHub activity rendered" || fail "GitHub activity missing"
 
-# CSRF works over HTTPS: a bad login should re-render the form (200), not 403.
+# CSRF works over HTTPS. Uses the admin logout form (CSRF-protected, no login
+# involved) so smoke runs never count as failed logins for the django-axes lockout.
 # Cookie passed by hand because it's Secure and curl won't send it over plain http.
 login_headers=$("${CURL[@]}" -D - -o /dev/null "$BASE/admin/login/")
 csrf=$(grep -i '^set-cookie: csrftoken=' <<<"$login_headers" | sed -E 's/.*csrftoken=([^;]+).*/\1/I' | tr -d '\r')
@@ -114,10 +115,17 @@ if [ -z "$csrf" ]; then
 else
   grep -i '^set-cookie: csrftoken=' <<<"$login_headers" | grep -qi secure \
     && pass "CSRF cookie is Secure" || fail "CSRF cookie not Secure"
-  got=$(status -H "Cookie: csrftoken=$csrf" -H "Origin: https://$HOST" -H "Referer: https://$HOST/admin/login/" \
-    --data "csrfmiddlewaretoken=$csrf&username=smoke&password=smoke" "$BASE/admin/login/")
-  [ "$got" = 200 ] && pass "admin login POST passes CSRF → 200" || fail "admin login POST → $got (expected 200)"
+  got=$(status -H "Cookie: csrftoken=$csrf" -H "Origin: https://$HOST" -H "Referer: https://$HOST/admin/" \
+    --data "csrfmiddlewaretoken=$csrf" "$BASE/admin/logout/")
+  # Logged-out logout redirects to the login page; anything but 403 means CSRF passed.
+  case "$got" in 200|302) pass "POST with CSRF token accepted → $got" ;; *) fail "POST with CSRF token → $got (expected 200/302)" ;; esac
+  got=$(status -H "Origin: https://$HOST" -H "Referer: https://$HOST/admin/" --data "x=1" "$BASE/admin/logout/")
+  [ "$got" = 403 ] && pass "POST without CSRF token rejected → 403" || fail "POST without CSRF token → $got (expected 403)"
 fi
+
+# HSTS on HTTPS responses
+hsts=$("${CURL[@]}" -D - -o /dev/null "$BASE/" | grep -i '^strict-transport-security:' | tr -d '\r')
+[ -n "$hsts" ] && pass "HSTS: ${hsts#*: }" || fail "no Strict-Transport-Security header"
 
 # Local only: blog article with markdown + code highlighting, against the real DB
 if [ "$MODE" = local ]; then

@@ -15,6 +15,17 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+# HSTS: browsers use HTTPS only for this long after a visit. Start short; raise
+# to 31536000 (a year) once confirmed. Not includeSubDomains: other *.inulty.com
+# hosts may not all serve HTTPS.
+SECURE_HSTS_SECONDS = 3600
+
+SILENCED_SYSTEM_CHECKS = [
+    "security.W005",  # HSTS includeSubDomains: off on purpose (see above)
+    "security.W021",  # HSTS preload: not wanted
+    "security.W008",  # SECURE_SSL_REDIRECT: kamal-proxy already redirects HTTP to HTTPS
+]
+
 DATABASES = {
     "default": env.db()
 }
