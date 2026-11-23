@@ -1,3 +1,3 @@
-yarn install
-yarn build
-DJANGO_SETTINGS_MODULE=inultycom.environments.dev python manage.py collectstatic -c --no-input --ignore /src/*
+corepack yarn install
+corepack yarn build
+DJANGO_SETTINGS_MODULE=inultycom.environments.dev venv/bin/python manage.py collectstatic -c --no-input --ignore /src/*

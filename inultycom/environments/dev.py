@@ -2,25 +2,17 @@ import environ
 import os
 from .settings import *
 
-# set casting, default value
-DEBUG=True
-env = environ.Env()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-env_file = os.path.join(BASE_DIR, ".env.dev")
-
-env.read_env(env_file)
-
+DEBUG = True
 ALLOWED_HOSTS = ["*"]
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+# Optional overrides in .env.dev. Real environment variables win over the file.
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, ".env.dev"))
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+SECRET_KEY = env("SECRET_KEY", default="dev-only-insecure-key")
 
+# SQLite by default so local dev needs no database server. Set DATABASE_URL
+# (e.g. in .env.dev) to use Postgres instead.
 DATABASES = {
-    "default": env.db()
+    "default": env.db(default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 }

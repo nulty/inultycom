@@ -1,3 +1,4 @@
 web: bin/dev
-reload: DJANGO_SETTINGS_MODULE=inultycom.environments.dev python manage.py livereload  # --open_url_delay=1 --ignore-static-dirs main/static/js/bundle.js
-dev: yarn start
+reload: DJANGO_SETTINGS_MODULE=inultycom.environments.dev venv/bin/python manage.py livereload '*.md' 'blog_articles/**/*.md'  # extra globs: reload on Markdown edits for /blog/preview/
+# rollup -w exits when stdin closes unless it is a TTY; keep a pipe open.
+assets: tail -f /dev/null | corepack yarn start

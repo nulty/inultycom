@@ -23,8 +23,16 @@ Settings are picked with `DJANGO_SETTINGS_MODULE=inultycom.environments.{dev,pro
 
 ### Run dev server
 ```
-DJANGO_SETTINGS_MODULE=inultycom.environments.dev python manage.py runserver
+make setup      # once: venv, Python + JS deps, assets, local DB
+make dev        # http://localhost:8000 with livereload and the asset watcher
+make superuser  # local admin user, to preview drafts at /blog/<slug>
 ```
+
+Local dev uses SQLite (`db.sqlite3`, gitignored), so no database server is needed.
+Set `DATABASE_URL` in `.env.dev` to use Postgres instead.
+
+Preview a Markdown post without the database at
+`http://localhost:8000/blog/preview/<file>.md`; it reloads when the file is saved.
 
 ### Using yarn 2/3
 

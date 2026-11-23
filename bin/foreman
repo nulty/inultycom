@@ -1,1 +1,4 @@
-foreman start -e .env.dev
+#!/usr/bin/env bash
+# Runs every process in the Procfile. -e /dev/null stops foreman loading the
+# tracked .env (docker-compose placeholders); dev settings read .env.dev themselves.
+exec foreman start -e /dev/null "$@"

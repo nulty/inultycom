@@ -6,31 +6,42 @@ SERVER    := root@178.128.165.170
 SSH_KEY   := ~/.ssh/inulty_digitalocean_ed25519
 SSH       := ssh -i $(SSH_KEY) -o IdentitiesOnly=yes $(SERVER)
 PY        := venv/bin/python
+YARN      := COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack yarn
+DEV       := DJANGO_SETTINGS_MODULE=inultycom.environments.dev
 # Enough env for prod settings to load without a real database
 CHECK_ENV := DJANGO_SETTINGS_MODULE=inultycom.environments.prod SECRET_KEY=check-only-not-a-real-key-0123456789abcdefghijklmnopqrstuvwxyz \
              DATABASE_URL=sqlite://:memory: ALLOWED_HOSTS=inulty.com
 
 .DEFAULT_GOAL := help
-.PHONY: help setup dev assets check image smoke smoke-live deploy backup outdated
+.PHONY: help setup dev superuser assets check test image smoke smoke-live deploy backup outdated
 
 help: ## List tasks
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  \033[36m%-11s\033[0m %s\n", $$1, $$2}'
 
-setup: ## Create venv, install Python and JS deps
+setup: ## Create venv, install Python and JS deps, build assets, migrate local DB
 	test -d venv || python -m venv venv
 	$(PY) -m pip install --upgrade pip
 	$(PY) -m pip install -r requirements.txt
-	yarn install
+	$(YARN) install
+	$(YARN) build
+	$(DEV) $(PY) manage.py migrate
 
-dev: ## Run dev server, livereload and asset watcher (foreman)
+dev: ## Run dev server on :8000, livereload and asset watcher (foreman)
+	$(DEV) $(PY) manage.py migrate --no-input
 	bin/foreman
 
+superuser: ## Create a local admin user (for previewing drafts)
+	$(DEV) $(PY) manage.py createsuperuser
+
 assets: ## Build the JS/CSS bundle
-	yarn build
+	$(YARN) build
 
 check: ## Django system checks + missing migrations, against prod settings
 	$(CHECK_ENV) $(PY) -Wd manage.py check --deploy --fail-level ERROR
 	$(CHECK_ENV) $(PY) manage.py makemigrations --check --dry-run
+
+test: ## Run the Django test suite (SQLite in memory)
+	$(CHECK_ENV) $(PY) manage.py test
 
 image: ## Build the production Docker image
 	docker build --platform linux/amd64 -t inultycom .
@@ -41,7 +52,7 @@ smoke: ## Build the image and smoke test it against a throwaway Postgres
 smoke-live: ## Smoke test the live site
 	bin/smoke $(SITE)
 
-deploy: check smoke ## Check, smoke test, deploy with Kamal, then smoke test live
+deploy: check test smoke ## Check, test, smoke test, deploy with Kamal, then smoke test live
 	bin/deploy
 	bin/smoke $(SITE)
 
