@@ -81,12 +81,12 @@ Kamal is pinned in `.mise.toml`, so `mise install` provides it.
   Data lives on the block volume at `/mnt/inultycom_vol1/postgres/data`.
 - **Health check**: `/up`, answered by `inultycom.middleware.HealthCheckMiddleware`.
 - **Secrets**: `.kamal/secrets` (gitignored; never commit it). Needs `SECRET_KEY`,
-  `POSTGRES_PASSWORD` and `DATABASE_URL`; the registry token comes from `$KAMAL_REGISTRY_PASSWORD`.
+  `POSTGRES_PASSWORD` and `DATABASE_URL`; the registry token (a DigitalOcean API token)
+  is read from `pass show do-registry`.
 
 Local tasks are in the `Makefile` (`make` lists them); server tasks are Kamal aliases.
 
 ```
-export KAMAL_REGISTRY_PASSWORD=<DigitalOcean API token>
 make smoke            # build the image, test it against a throwaway Postgres
 make deploy           # check + smoke, kamal deploy, then smoke test the live site
 make smoke-live       # smoke test https://inulty.com
