@@ -1,4 +1,3 @@
-@use "./card";
 @use "./markdown";
 @use "./codehilite/one-dark.css";
 
@@ -7,101 +6,54 @@
 @tailwind utilities;
 
 @layer base {
-
-  :root {
-    --color-primary: #3ca4c8; // bluish
-    --color-secondary: #eaebf0; // whitish
-    --color-tertiary: #212830; // greyish
-    --nav-height: 64px;
-    --footer-height: 112px;
-    --main-height: calc(100svh - var(--footer-height) - var(--nav-height));
-    --splash-height: calc(100svh - var(--nav-height));
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }
 
-:root {
-    --nav-height: 64px;
-    --footer-height: 112px;
-    --main-height: calc(100svh - var(--footer-height) - var(--nav-height));
-    --splash-height: calc(100svh - var(--nav-height));
-}
-nav {
-  z-index: 1;
-
-  background-color: var(--color-tertiary);
-
-  svg {
-    fill: var(--color-primary);
-
-    height: 30px;
-
-    opacity: 1;
-  }
-}
-
-.button--border {
-  @apply rounded border-2 border-primary bg-tertiary px-4 py-2 text-lg text-center text-white hover:bg-primary md:text-4xl;
-
-}
-
-.bg-primary {
-  background-color: var(--color-primary);
-}
-
-.work, .blog {
-  background-color: var(--color-tertiary);
-
-  .card-body {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+@layer components {
+  .eyebrow {
+    @apply mb-1.5 text-[13px] font-medium uppercase tracking-[0.12em] text-accent;
   }
 
-  .card-body img {
-    width: 4rem;
+  .section-title {
+    @apply font-hero text-[clamp(26px,3vw,32px)] font-medium leading-tight text-white;
   }
-}
 
-.home section {
-  min-height: 100svh;
-  &#splash {
-
-    min-height: var(--splash_height);
-
-
+  .card-title {
+    @apply font-hero text-xl font-medium text-white;
   }
-}
 
-.white {
-  color: #eaebf0;
-}
+  .panel {
+    @apply rounded-xl border border-ink-line bg-ink-card;
+  }
 
-.blue {
-  color: var(--color-primary);
-}
+  /* As many columns as fit, each at least --card-min wide. */
+  .card-grid {
+    @apply grid gap-6;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min, 260px)), 1fr));
+  }
 
-.header-logo {
-  fill: #ccc;
-}
+  .chip {
+    @apply rounded-full border border-ink-line px-3.5 py-1.5 text-sm text-fog-100;
+  }
 
-.header {
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.6615021008403361) 9%,
-    rgba(0, 212, 255, 0.01) 73%
-  );
-}
+  .text-link {
+    @apply inline-flex min-h-11 items-center gap-2 font-medium text-accent hover:text-white;
+  }
 
-/* For Webkit-based browsers (Chrome, Safari and Opera) */
+  /* Faint accent dot grid behind the hero. It sits behind the portrait on wide
+     screens and fades in from the top on phones, so it never crowds the text. */
+  .hero-pattern {
+    background-image: radial-gradient(circle, theme("colors.accent.DEFAULT / 40%") 1.2px, transparent 1.7px);
+    background-size: 24px 24px;
+    background-position: center;
+    mask-image: radial-gradient(ellipse 100% 70% at 50% 0%, #000 0%, transparent 80%);
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* For IE, Edge and Firefox */
-
-.scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+    @screen md {
+      mask-image: radial-gradient(ellipse 55% 80% at 80% 50%, #000 0%, transparent 72%);
+    }
+  }
 }

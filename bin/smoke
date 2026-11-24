@@ -89,21 +89,22 @@ expect 200 /blog/
 expect 200 /admin/login/
 
 # Static assets (WhiteNoise)
-for path in /assets/dist/bundle.css /assets/dist/bundle.js /assets/images/hero.jpg \
+for path in /assets/dist/bundle.css /assets/images/linux.png \
             /assets/images/me.jpeg /assets/images/rubyl.svg /assets/admin/css/base.css; do
   expect 200 "$path"
 done
 
-# Every image the homepage references actually loads
+# Every image and stylesheet the homepage references actually loads
 home=$("${CURL[@]}" "$BASE/")
 broken=0
-for src in $(grep -o -E 'src="/assets/[^"]+"' <<<"$home" | cut -d'"' -f2 | sort -u); do
+for src in $(grep -o -E '(src|href)="/assets/[^"]+"' <<<"$home" | cut -d'"' -f2 | sort -u); do
   [ "$(status "$BASE$src")" = 200 ] || { fail "homepage asset $src"; broken=1; }
 done
 [ $broken = 0 ] && pass "all homepage assets load"
 
-# GitHub activity feed rendered
-grep -q 'github.com/nulty/' <<<"$home" && pass "GitHub activity rendered" || fail "GitHub activity missing"
+# Homepage content rendered (years are computed, so a template error would show here)
+grep -qE '[0-9]+\+ years shipping' <<<"$home" && grep -q 'Side projects' <<<"$home" \
+  && pass "homepage content rendered" || fail "homepage content missing"
 
 # CSRF works over HTTPS. Uses the admin logout form (CSRF-protected, no login
 # involved) so smoke runs never count as failed logins for the django-axes lockout.

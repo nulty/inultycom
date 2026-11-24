@@ -6,8 +6,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-DJANGO_ICONS = {"ICONS": {"check": "check"}}
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -21,7 +19,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_icons",
     "axes",
 ]
 
@@ -57,6 +54,13 @@ AXES_CLIENT_IP_CALLABLE = "inultycom.client_ip.get_client_ip"
 
 ROOT_URLCONF = "inultycom.urls"
 
+# Contact and company details shown on every page (main.context_processors.site).
+# UK companies must show their number and registered office on their website.
+# A value left as None is hidden.
+CONTACT_EMAIL = None
+COMPANY_NUMBER = None
+REGISTERED_OFFICE = None
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -68,6 +72,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "main.context_processors.site",
             ],
         },
     },

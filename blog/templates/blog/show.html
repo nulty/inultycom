@@ -1,6 +1,8 @@
-{% extends 'main/base.html' %} {% block body %} {% load markdownify %}
+{% extends 'main/base.html' %}{% load markdownify %}
+{% block meta %}{% include "main/meta.html" with title=article.title description=article.sub_title og_type="article" %}{% endblock %}
+{% block body %}
 <div
-  class="blog show container mx-auto pt-12 xl:max-w-[50rem] font-content text-slate-200 px-12 md:px-4 md:pt-32"
+  class="blog show container mx-auto pt-12 xl:max-w-[50rem] text-slate-200 px-12 md:px-4 md:pt-32"
 >
   {% if preview %}
   <div class="mb-8 rounded border border-amber-400 px-4 py-2 text-center text-sm text-amber-300">

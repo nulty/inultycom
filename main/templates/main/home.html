@@ -1,308 +1,118 @@
-{% extends 'main/base.html' %} {% block body %} {% load static %} {% load icons %}
+{% extends 'main/base.html' %}{% load static %}
+{% block body %}
 
-<section
-  id="splash"
-  class="h-[var(--splash-height)] bg-hero-pattern bg-cover bg-center"
->
-  <div class="  relative h-full px-16 pt-[50%] md:px-48 md:pt-[15%]">
-    <p class="font-hero text-4xl text-white md:text-5xl xl:text-7xl">
-      Iain McNulty
-    </p>
-    <p class="font-hero text-3xl text-primary md:text-4xl xl:text-6xl">
-      {% icon 'fa fa-terminal text-white' %} Software Engineer
-    </p>
-    <div
-      class="absolute bottom-0 left-[50%] translate-x-[-50%] translate-y-[20%]"
-    >
-      <a
-        class="js-scroll-down button--border flex h-20 w-20 items-center justify-center self-center md:h-28 md:w-28"
-        href="#intro"
-        >{% icon 'fa fa-arrow-down text-white' %}</a
-      >
-    </div>
-  </div>
-</section>
+<section aria-label="About Iain" class="relative flex overflow-hidden bg-ink-deep md:min-h-[calc(100svh-4rem)]">
+  <div aria-hidden="true" class="hero-pattern absolute inset-0"></div>
+  <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-accent to-transparent opacity-70"></div>
 
-<section
-  id="intro"
-  class="shadow-primary-500 flex w-full flex-col items-center justify-evenly bg-tertiary p-6 text-slate-200 shadow-lg"
->
-  <div class="flex flex-col md:flex-row">
-    <div class="flex justify-center self-center md:w-2/5 lg:self-center">
-      <img
-        src="{% static 'images/me.jpeg' %}"
-        alt="Me"
-        class="h-48 w-48 rounded-full"
-      />
-    </div>
-    <div class="xl:pr-(25%) md:ml-40 md:w-3/5 lg:ml-0">
-      <p class="py-4 text-2xl lg:text-4xl">Hi, I'm Iain.</p>
-      <p class="py-4">
-        I use Ruby and other programming languages to build solutions.
+  <div class="relative mx-auto flex w-full max-w-page flex-wrap-reverse items-center justify-between gap-x-14 gap-y-7 px-5 pb-12 pt-10 md:px-6 md:pb-32 md:pt-[72px]">
+    <div class="min-w-0 flex-[1_1_480px]">
+      <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-mint/40 bg-mint/10 px-3.5 py-1.5 text-sm font-medium text-mint-light">
+        <span aria-hidden="true" class="h-2 w-2 rounded-full bg-mint"></span>Open to permanent and contract roles
       </p>
-      <p class="py-4">
-        Get in touch if you want a dynamic software developer to join your
-        enterprise.
+      <h1 class="font-hero text-[clamp(44px,6vw,76px)] font-semibold leading-[1.05] tracking-[-0.01em] text-white">Iain McNulty</h1>
+      <p class="mt-2 flex items-center gap-3.5 font-hero text-[clamp(24px,3.2vw,42px)] leading-tight text-accent">
+        {% include "main/icons/terminal.html" with class="h-[0.9em] w-[0.9em] shrink-0 text-white" %}
+        Senior Full-stack Engineer
       </p>
-    </div>
-  </div>
+      <p class="mt-7 max-w-[54ch] leading-[1.7] text-fog-200 md:text-lg">London-based senior engineer and tech lead with {{ years }}+ years shipping web products, from early-stage startups to multinationals. I set technical direction, mentor developers and work directly with stakeholders, whether I'm leading a team or delivering a project solo.</p>
 
-  <div class="flex w-full items-center justify-between text-xl md:w-[30%]">
-    <span class="whitespace-nowrap">I write</span>
-    <img
-      class="h-16 w-16"
-      src="{% static 'images/rubyl.svg' %}"
-      title="Ruby"
-      alt="Ruby"
-    />
-    {% icon 'fa fa-plus' %}
-    <img
-      class="h-16 w-16"
-      src="{% static 'images/rails.png' %}"
-      title="Rails"
-      alt="Rails"
-    />
-    in
-    <img
-      class="h-16 w-16"
-      src="{% static 'images/nvim.svg' %}"
-      alt="NeoVim"
-      title="NeoVim"
-      width="128"
-    />
-  </div>
-  <div class="relative">
-    <div
-      class="absolute h-36 w-screen -translate-x-[50%] overflow-hidden md:translate-y-[70%]"
-    >
-      <svg
-        xmlns:dc="http://purl.org/dc/elements/1.1/"
-        xmlns:cc="http://creativecommons.org/ns#"
-        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-        xmlns:svg="http://www.w3.org/2000/svg"
-        xmlns="http://www.w3.org/2000/svg"
-        id="svg8"
-        version="1.1"
-        viewBox="0 0 422.12386 53.741826"
-        height="203.11871"
-        width="100%"
-      >
-        <g style="display: none" id="layer2">
-          <rect
-            y="1.7833529"
-            x="0.081787996"
-            height="52.916668"
-            width="423.33334"
-            id="rect4644"
-            style="
-              opacity: 0.925;
-              fill: none;
-              fill-opacity: 1;
-              stroke: var(--color-primary);
-              stroke-width: 0.5291667;
-              stroke-linecap: butt;
-              stroke-miterlimit: 4;
-              stroke-dasharray: none;
-              stroke-dashoffset: 0;
-              stroke-opacity: 1;
-            "
-          />
-        </g>
-        <g
-          style="display: inline"
-          transform="translate(3.2423985,-24.346313)"
-          id="layer1"
-        >
-          <path
-            id="path4545"
-            d="m -3.1606099,50.658628 c 0,0 89.9583359,-52.0023386 202.6381599,0.476795 126.02771,58.695727 220.69518,0.437533 220.69518,0.437533"
-            style="
-              fill: none;
-              stroke: var(--color-primary);
-              stroke-width: 0.46458332px;
-              stroke-linecap: butt;
-              stroke-linejoin: miter;
-              stroke-opacity: 1;
-            "
-          />
-        </g>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<!-- WORK DESCRIPTION-->
-<!-- <div class="work bg-tertiary pt-12 font-content text-slate-200 md:px-28"> -->
-<section
-  class="work flex flex-wrap bg-tertiary pt-12 align-middle font-content text-slate-200 md:gap-x-16 md:px-28 lg:flex-row"
->
-  <div class="card card__bullets">
-    <div class="card-head">Experience</div>
-    <div class="card-body">
-      <ul>
-        <li>{% icon 'fa fa-check' %} {{years}} years professional career</li>
-        <li>{% icon 'fa fa-check' %} Full Stack</li>
-        <li>{% icon 'fa fa-check' %} Startups to Multinationals</li>
-      </ul>
-    </div>
-  </div>
-  <div class="card card__bullets">
-    <div class="card-head">Status</div>
-    <div class="card-body">
-      <ul>
-        <li>{% icon 'fa fa-map-pin' %} London based</li>
-        <li>{% icon 'fa fa-briefcase' %} Remote and Hybrid</li>
-        <li>{% icon 'fa fa-plus' %} DBS Clearance & Insured</li>
-      </ul>
-    </div>
-  </div>
-  <div class="card card__bullets">
-    <div class="card-head">Strengths</div>
-    <div class="card-body">
-      <ul>
-        <li>{% icon 'fa fa-comments' %} Communication</li>
-        <li>{% icon 'fa fa-users' %} Collaboration</li>
-        <li>{% icon 'fa fa-code' %} Devops to SPA</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="card full">
-    <div class="card-head">Past Projects</div>
-    <div class="card-body">
-      <div class="flex flex-grow flex-wrap justify-between gap-12">
-        <div class="text-center">
-          <img
-            src="{% static 'images/aws.svg' %}"
-            title="Amazon Web Services"
-            alt="AWS"
-          />AWS
-        </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/crystal-white.svg' %}"
-            alt="Crystal"
-            title="Crystal"
-            width="128"
-          />
-          Crystal
-        </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/python.svg' %}"
-            alt="Python"
-            title="Python"
-            width="128"
-          />
-          Django
-        </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/docker.svg' %}"
-            alt="Docker"
-            title="Docker"
-            width="128"
-          />Docker
-        </div>
-        <div class="text-center">
-          <a
-            href="https://github.com/nulty?tab=repositories&q=chrome-extension&type=&language=&sort="
-            ><img
-              src="{% static 'images/chrome.svg' %}"
-              alt="Chrome"
-              title="Chrome"
-              width="128"
-            />
+      <div class="mt-8 flex items-center gap-5">
+        {% include "main/portrait.html" with class="h-[88px] w-[88px] ring-[6px] md:hidden" %}
+        <div class="min-w-0">
+          <a href="{{ contact_url }}" class="inline-flex min-h-12 items-center gap-2.5 rounded-lg bg-accent px-[22px] font-medium text-ink-darkest hover:bg-accent-light">
+            {% include "main/icons/mail.html" with class="h-[18px] w-[18px]" %}
+            Get in touch
           </a>
-          Extensions
+          <p class="mt-3.5 flex flex-wrap items-center gap-3 text-[15px] text-fog-400 md:mt-8">
+            I work on
+            <img src="{% static 'images/linux.png' %}" alt="Linux" width="26" height="26" class="h-[26px] w-[26px] object-contain" />
+            in
+            <img src="{% static 'images/nvim.svg' %}" alt="Neovim" width="26" height="26" class="h-[26px] w-[26px] object-contain" />
+          </p>
         </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/js.png' %}"
-            title="Javascript"
-            alt="Javascript"
-          />
-          Javascript
-        </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/python.svg' %}"
-            alt="Python"
-            title="Python"
-            width="128"
-          />Python
-        </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/rails.png' %}"
-            title="Rails"
-            alt="Rails"
-          />
-          Rails
-        </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/react.png' %}"
-            title="React"
-            alt="React"
-          />
-          React
-        </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/rubyl.svg' %}"
-            title="Ruby"
-            alt="Ruby"
-          />Ruby
-        </div>
-        <div class="text-center">
-          <img
-            src="{% static 'images/vuejs.svg' %}"
-            alt="VueJS"
-            title="VueJS"
-            width="128"
-          />
-          Vue
-        </div>
-        <!-- <div class="flex flex-col items-center justify-between"> -->
-        <!--   <img -->
-        <!--     src="{% static 'images/ts-logo-128.svg' %}" -->
-        <!--     alt="TypeScript" -->
-        <!--     title="TypeScript" -->
-        <!--   />TypeScript -->
-        <!-- </div> -->
-        <!-- <div class="text-center"> -->
-        <!--   <img -->
-        <!--     src="{% static 'images/nvim.svg' %}" -->
-        <!--     alt="NeoVim" -->
-        <!--     title="NeoVim" -->
-        <!--     width="128" -->
-        <!--   />Nvim -->
-        <!-- </div> -->
-        <!-- <div class="text-center"> -->
-        <!--   <img -->
-        <!--     src="{% static 'images/linux.png' %}" -->
-        <!--     title="Linux" -->
-        <!--     alt="Linux" -->
-        <!--   />Linux -->
-        <!-- </div> -->
       </div>
     </div>
+
+    {% include "main/portrait.html" with class="hidden h-[clamp(96px,22vw,280px)] w-[clamp(96px,22vw,280px)] ring-8 md:block" %}
+  </div>
+
+  <a href="#glance" aria-label="Scroll to more about Iain" class="absolute bottom-8 left-1/2 hidden h-[52px] w-[52px] -translate-x-1/2 items-center justify-center rounded-full border-[1.5px] border-accent text-white hover:bg-accent/15 md:flex">
+    {% include "main/icons/arrow-down.html" with class="h-5 w-5" %}
+  </a>
+</section>
+
+<section aria-labelledby="glance" class="mx-auto max-w-page px-6 pb-20 pt-10 md:pt-24">
+  <p class="eyebrow">At a glance</p>
+  <h2 id="glance" class="section-title mb-8 scroll-mt-8">How I work</h2>
+  <div class="card-grid">
+    {% for practice in practices %}
+    <div class="panel p-7">
+      <span aria-hidden="true" class="flex h-11 w-11 items-center justify-center rounded-[10px] bg-accent/[0.12] text-accent">
+        {% with icon="main/icons/"|add:practice.icon|add:".html" %}{% include icon with class="h-[22px] w-[22px]" %}{% endwith %}
+      </span>
+      <h3 class="card-title mb-2 mt-[18px]">{{ practice.title }}</h3>
+      <p class="leading-[1.65] text-fog-300">{{ practice.body }}</p>
+    </div>
+    {% endfor %}
+    <div class="col-span-full mt-1 flex flex-wrap items-center gap-2.5">
+      <span class="mr-1.5 text-sm font-medium text-fog-400">Working with me</span>
+      {% for term in working_with_me %}<span class="chip">{{ term }}</span>{% endfor %}
+    </div>
   </div>
 </section>
 
-<div
-  class="shadow-primary-500 w-full overflow-hidden bg-secondary p-6 lg:col-span-3"
->
-  <div class="text-primary-700 pb-6 text-center text-4xl md:text-left">
-    Github {% icon 'fab fa-github'%}
-  </div>
-
-  <div class="scrollbar-hide overflow-scroll">
-    <div class="flex w-max cursor-context-menu flex-row gap-16 p-10">
-      {% for event in github_events %} {% with template="main/github/events/"|add:event.template|add:".html" %} {% include template with event=event %} {% endwith %} {% endfor %}
+<section aria-labelledby="toolbox" class="mx-auto max-w-page px-6 pb-20">
+  <p class="eyebrow">Toolbox</p>
+  <h2 id="toolbox" class="section-title mb-2">Things I've shipped with</h2>
+  <p class="mb-8 max-w-[60ch] text-[17px] text-fog-300">Production work across languages, frameworks and platforms.</p>
+  <div class="card-grid">
+    {% for group in toolbox %}
+    <div class="panel px-7 py-6">
+      <h3 class="eyebrow mb-[18px] text-fog-400">{{ group.title }}</h3>
+      <ul class="flex flex-wrap gap-2 md:flex-col md:gap-3.5">
+        {% for item in group.items %}
+        <li class="flex items-center gap-2 rounded-full border border-ink-line py-1 pl-1 pr-3 text-sm md:gap-3.5 md:border-0 md:p-0 md:text-base">
+          {% if item.image %}
+          <img src="{% static item.image %}" alt="" width="32" height="32" loading="lazy" decoding="async" class="h-[22px] w-[22px] object-contain md:h-8 md:w-8" />
+          {% else %}
+          <span aria-hidden="true" class="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-[7px] font-hero text-[11px] font-semibold md:h-8 md:w-8 md:text-sm {{ item.tile_class }}">{{ item.tile }}</span>
+          {% endif %}
+          {{ item.name }}
+        </li>
+        {% endfor %}
+      </ul>
     </div>
+    {% endfor %}
   </div>
-</div>
+</section>
+
+<section aria-labelledby="projects" class="mx-auto max-w-page px-6 pb-24">
+  <div class="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+    <div>
+      <p class="eyebrow">Side projects</p>
+      <h2 id="projects" class="section-title">Things I build in my own time</h2>
+    </div>
+    <a href="{{ github_url }}" rel="noopener" class="text-link">More on GitHub
+      {% include "main/icons/arrow-right.html" with class="h-[18px] w-[18px]" %}
+    </a>
+  </div>
+  <div class="card-grid [--card-min:420px]">
+    {% for project in projects %}
+    <article class="panel flex flex-col px-7 pb-3.5 pt-6">
+      <h3 class="card-title">{{ project.name }}</h3>
+      <p class="mb-3 mt-1 text-sm text-fog-400">{{ project.stack }}</p>
+      <p class="flex-auto leading-[1.65] text-fog-300">{{ project.description }}</p>
+      <div class="mt-2.5 flex flex-wrap gap-x-5">
+        {% for link in project.links %}
+        <a href="{{ link.url }}" rel="noopener" class="text-link text-[15px]">
+          {% with icon="main/icons/"|add:link.icon|add:".html" %}{% include icon with class="h-4 w-4 shrink-0" %}{% endwith %}{{ link.label }}
+        </a>
+        {% endfor %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
 
 {% endblock %}

@@ -9,13 +9,11 @@ from .models import BlogArticle
 
 
 def index(request):
-    page_name = "blog"
     qset = BlogArticle.objects.published().order_by("-published_at")[:9]
     latest_articles = qset[:1]
     articles = qset[1:]
 
     context = {
-        "page_name": page_name,
         "latest_articles": latest_articles,
         "articles": articles,
     }
@@ -32,7 +30,7 @@ def show(request, slug):
     if article is None:
         raise Http404("No such article")
 
-    context = {"article": article, "page_name": "blog", "preview": not article.is_published}
+    context = {"article": article, "preview": not article.is_published}
     return render(request, "blog/show.html", context)
 
 
@@ -64,5 +62,5 @@ def preview_file(request, path):
         slug=file.stem,
         created_at=timezone.now(),
     )
-    context = {"article": article, "page_name": "blog", "preview": True, "preview_file": path}
+    context = {"article": article, "preview": True, "preview_file": path}
     return render(request, "blog/show.html", context)

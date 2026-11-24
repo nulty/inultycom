@@ -1,36 +1,22 @@
-{% load static %} {% load livereload_tags %} {% load icons %}
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}{% load livereload_tags %}<!DOCTYPE html>
+<html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
-    <script src="{% static 'dist/bundle.js' %}"></script>
+    {% block meta %}{% include "main/meta.html" %}{% endblock %}
     <link rel="stylesheet" href="{% static 'dist/bundle.css' %}" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Prompt:wght@400;500;700&display=swap"
     />
-
     {% livereload_script %}
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Prompt&display=swap"
-      rel="stylesheet"
-    />
   </head>
 
-  <body class="{{page_name}}">
+  <body class="flex min-h-svh flex-col bg-ink font-content text-base leading-relaxed text-fog-100">
     {% include 'main/navbar.html' %}
-    <main class="min-h-[var(--main-height)]">{% block body %} {% endblock %}</main>
+    <main class="flex-1">{% block body %}{% endblock %}</main>
     {% include 'main/footer.html' %}
     {% if env == "prod" %}
     <!-- Google tag (gtag.js) -->

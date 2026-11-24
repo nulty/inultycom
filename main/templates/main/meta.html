@@ -1,0 +1,12 @@
+{# Title, description and Open Graph tags. Pages override base.html's {% block meta %} and include this with title=, description= and og_type=. #}
+{% with d=description|default:"London-based senior full-stack engineer and tech lead. Open to permanent and contract roles." %}
+{% if title %}{% with t=title|add:" · Iain McNulty" %}<title>{{ t }}</title>
+<meta property="og:title" content="{{ t }}" />{% endwith %}
+{% else %}<title>Iain McNulty · Senior Full-stack Engineer</title>
+<meta property="og:title" content="Iain McNulty · Senior Full-stack Engineer" />{% endif %}
+<meta name="description" content="{{ d }}" />
+<meta property="og:description" content="{{ d }}" />
+{% endwith %}
+<meta property="og:type" content="{{ og_type|default:'website' }}" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:site_name" content="inulty" />

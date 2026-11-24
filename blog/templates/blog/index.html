@@ -1,6 +1,8 @@
-{% extends 'main/base.html' %} {% block body %}
+{% extends 'main/base.html' %}
+{% block meta %}{% include "main/meta.html" with title="Blog" %}{% endblock %}
+{% block body %}
 <div
-  class="container mx-auto mt-[64px] min-h-full font-content text-slate-200 md:px-4"
+  class="container mx-auto mt-[64px] min-h-full text-slate-200 md:px-4"
 >
   <div class="flex items-center justify-center text-4xl">the Blog</div>
 
@@ -37,5 +39,5 @@
       {% endfor %}
     </div>
   </div>
-  {% endblock %}
 </div>
+{% endblock %}

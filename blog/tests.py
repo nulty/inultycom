@@ -71,6 +71,11 @@ class ArticleVisibilityTests(TestCase):
         response = self.client.get(backdated.get_absolute_url())
         self.assertContains(response, "Friday, 01 Nov 2024")
 
+    def test_article_page_title_and_description_come_from_the_article(self):
+        response = self.client.get("/blog/published")
+        self.assertContains(response, "<title>Published · Iain McNulty</title>", html=True)
+        self.assertContains(response, '<meta name="description" content="sub" />', html=True)
+
     def test_get_absolute_url(self):
         self.assertEqual(self.published.get_absolute_url(), "/blog/published")
 
