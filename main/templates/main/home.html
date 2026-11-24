@@ -20,7 +20,7 @@
       <div class="mt-8 flex items-center gap-5">
         {% include "main/portrait.html" with class="h-[88px] w-[88px] ring-[6px] md:hidden" %}
         <div class="min-w-0">
-          <a href="{{ contact_url }}" class="inline-flex min-h-12 items-center gap-2.5 rounded-lg bg-accent px-[22px] font-medium text-ink-darkest hover:bg-accent-light">
+          <a href="{{ contact_url }}"{% if contact_email_encoded %} data-email="{{ contact_email_encoded }}"{% endif %} class="inline-flex min-h-12 items-center gap-2.5 rounded-lg bg-accent px-[22px] font-medium text-ink-darkest hover:bg-accent-light">
             {% include "main/icons/mail.html" with class="h-[18px] w-[18px]" %}
             Get in touch
           </a>

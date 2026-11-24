@@ -56,10 +56,12 @@ ROOT_URLCONF = "inultycom.urls"
 
 # Contact and company details shown on every page (main.context_processors.site).
 # UK companies must show their number and registered office on their website.
-# A value left as None is hidden.
-CONTACT_EMAIL = None
-COMPANY_NUMBER = None
-REGISTERED_OFFICE = None
+# A value set to None is hidden. The contact email is stored encoded so it's not in
+# this public repo or the HTML as text; main.js decodes it in the browser. To change
+# it: python -c "from main.context_processors import encode_email as e; print(e('you@example.com'))"
+CONTACT_EMAIL_ENCODED = "bW9jLnl0bHVuaUBuaWFp"
+COMPANY_NUMBER = "11426762"
+REGISTERED_OFFICE = "199 Field End Road, Eastcote, Pinner, HA5 1QZ, United Kingdom"
 
 TEMPLATES = [
     {

@@ -89,7 +89,7 @@ expect 200 /blog/
 expect 200 /admin/login/
 
 # Static assets (WhiteNoise)
-for path in /assets/dist/bundle.css /assets/images/linux.png \
+for path in /assets/dist/bundle.css /assets/dist/bundle.js /assets/images/linux.png \
             /assets/images/me.jpeg /assets/images/rubyl.svg /assets/admin/css/base.css; do
   expect 200 "$path"
 done

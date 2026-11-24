@@ -1,8 +1,10 @@
+import base64
 from datetime import date
 from unittest import mock
 
 from django.test import TestCase, override_settings
 
+from main.context_processors import encode_email
 from main.views import years_of_experience
 
 
@@ -40,16 +42,25 @@ class HomePageTests(TestCase):
         self.assertNotContains(response, "github.com/nulty/beermatz")
         self.assertNotContains(response, "github.com/nulty/sinsear")
 
-    @override_settings(CONTACT_EMAIL="someone@example.com")
-    def test_contact_email_is_a_link_and_visible_text(self):
-        response = self.get()
-        self.assertContains(response, 'href="mailto:someone@example.com"')
-        self.assertContains(response, ">someone@example.com<")
+    def test_encode_email_round_trips_the_way_main_js_decodes_it(self):
+        encoded = encode_email("someone@example.com")
+        self.assertNotIn("someone", encoded)
+        # main.js: base64-decode, then reverse the string.
+        self.assertEqual(base64.b64decode(encoded).decode()[::-1], "someone@example.com")
 
-    @override_settings(CONTACT_EMAIL=None)
-    def test_get_in_touch_falls_back_to_linkedin_without_an_email(self):
+    @override_settings(CONTACT_EMAIL_ENCODED=encode_email("someone@example.com"))
+    def test_contact_email_is_never_in_the_html_as_text(self):
         response = self.get()
-        self.assertNotContains(response, "mailto:")
+        html = response.content.decode()
+        self.assertNotIn("someone@example.com", html)
+        self.assertNotIn("mailto:", html)
+        encoded = encode_email("someone@example.com")
+        self.assertContains(response, f'data-email="{encoded}"', count=2)  # hero + footer
+
+    @override_settings(CONTACT_EMAIL_ENCODED=None)
+    def test_without_an_email_contact_links_go_to_linkedin(self):
+        response = self.get()
+        self.assertNotContains(response, "data-email")
         self.assertContains(response, "Get in touch")
 
     @override_settings(COMPANY_NUMBER="01234567", REGISTERED_OFFICE="1 Example Street, London")

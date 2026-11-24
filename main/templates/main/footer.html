@@ -3,7 +3,7 @@
     <div class="space-y-1">
       <p>© {% now "Y" %} Iain McNulty Limited · Registered in England and Wales{% if company_number %} · Company number {{ company_number }}{% endif %}</p>
       {% if registered_office %}<p>Registered office: {{ registered_office }}</p>{% endif %}
-      {% if contact_email %}<p><a href="mailto:{{ contact_email }}" class="text-fog-100 hover:text-accent">{{ contact_email }}</a></p>{% endif %}
+      {% if contact_email_encoded %}<p><a href="{{ contact_url }}" data-email="{{ contact_email_encoded }}" data-email-text class="text-fog-100 hover:text-accent">Get in touch</a></p>{% endif %}
     </div>
     <p class="flex items-center gap-2.5">Designed and built by
       {% include "main/logo.html" with class="h-[18px] w-auto fill-accent" label="inulty" %}
